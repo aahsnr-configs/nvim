@@ -40,7 +40,7 @@ distrobox enter arch-desktop
 
 ### Initial Container Configuration
 
-Once inside the Arch container, update the system and install essential packages for GUI applications.
+Once inside the Arch container, update the system and install essential packages for GUI applications.,.
 
 ```bash
 # Update package repositories and system
@@ -365,27 +365,27 @@ chmod +x ~/.local/bin/manage-distrobox.sh
 ### Summary of Fixes and Changes
 
 1. **Redundancy in Theming:**
-    - The separate `sync-gtk-theme.sh` and `apply-unified-theme.sh` scripts were redundant and contradictory. They were merged into a single `sync-theme.sh` script.
-    - The hardcoded Qt configuration was replaced with a dynamic method that sets the Qt style to `gtk2`, forcing Qt to follow the GTK theme automatically. This is a much more robust and maintainable approach.
-    - Removed the redundant `QT_STYLE_OVERRIDE` environment variable.
+   - The separate `sync-gtk-theme.sh` and `apply-unified-theme.sh` scripts were redundant and contradictory. They were merged into a single `sync-theme.sh` script.
+   - The hardcoded Qt configuration was replaced with a dynamic method that sets the Qt style to `gtk2`, forcing Qt to follow the GTK theme automatically. This is a much more robust and maintainable approach.
+   - Removed the redundant `QT_STYLE_OVERRIDE` environment variable.
 
 2. **Improved Scripting Logic:**
-    - Scripts now use `#!/usr/bin/env bash` for better portability.
-    - Added checks to ensure scripts exit gracefully if a required setting (like a host theme) cannot be found.
-    - Environment variables are now set using `~/.config/environment.d/` files inside the container, which is the modern, systemd-recommended way for user sessions. This avoids cluttering shell-specific files like `.bashrc`.
+   - Scripts now use `#!/usr/bin/env bash` for better portability.
+   - Added checks to ensure scripts exit gracefully if a required setting (like a host theme) cannot be found.
+   - Environment variables are now set using `~/.config/environment.d/` files inside the container, which is the modern, systemd-recommended way for user sessions. This avoids cluttering shell-specific files like `.bashrc`.
 
 3. **Simplification and Accuracy:**
-    - The `pacman` command in the initial setup was consolidated using `--noconfirm` and `--needed` to be more efficient.
-    - Removed the `xorg-server-xephyr` package, as it's not needed for running applications and adds unnecessary complexity.
-    - Added the `gsettings-desktop-schemas` package, which is often required for `gsettings` to work correctly.
+   - The `pacman` command in the initial setup was consolidated using `--noconfirm` and `--needed` to be more efficient.
+   - Removed the `xorg-server-xephyr` package, as it's not needed for running applications and adds unnecessary complexity.
+   - Added the `gsettings-desktop-schemas` package, which is often required for `gsettings` to work correctly.
 
 4. **SELinux Section Overhaul:**
-    - The guide now strongly recommends **Udica** as the primary method for generating SELinux policies, which is safer and more accurate than writing manual rules.
-    - The complex and potentially insecure manual `.te` file has been removed in favor of the automated Udica workflow.
-    - Simplified the SELinux commands and added checks to ensure the container is running before generating a policy.
-    - Removed unnecessary `setsebool` commands that are not relevant for a standard desktop setup.
+   - The guide now strongly recommends **Udica** as the primary method for generating SELinux policies, which is safer and more accurate than writing manual rules.
+   - The complex and potentially insecure manual `.te` file has been removed in favor of the automated Udica workflow.
+   - Simplified the SELinux commands and added checks to ensure the container is running before generating a policy.
+   - Removed unnecessary `setsebool` commands that are not relevant for a standard desktop setup.
 
 5. **Enhanced Best Practices:**
-    - Instead of sourcing scripts from `.bashrc`, the guide now recommends using Distrobox's built-in `pre-init` hook for a more reliable and shell-agnostic initialization process.
-    - Replaced instructions for manually creating `.desktop` files with the much simpler and more robust `distrobox-export` command.
-    - The container management script was simplified to focus on the most common and useful tasks.
+   - Instead of sourcing scripts from `.bashrc`, the guide now recommends using Distrobox's built-in `pre-init` hook for a more reliable and shell-agnostic initialization process.
+   - Replaced instructions for manually creating `.desktop` files with the much simpler and more robust `distrobox-export` command.
+   - The container management script was simplified to focus on the most common and useful tasks.
