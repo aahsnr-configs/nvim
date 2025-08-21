@@ -344,48 +344,48 @@ chmod +x ~/.local/bin/manage-distrobox.sh
 
 #### Theme Not Applied Correctly
 
-1.  **Re-run the script**: `distrobox enter arch-desktop -- ~/.local/bin/sync-theme.sh`
-2.  **Check Environment Variables**: Inside the container, run `env | grep QT_`. You should see `QT_QPA_PLATFORMTHEME=qt5ct`.
-3.  **Install Missing Theme Engine**: The container may need a specific GTK theme engine (e.g., `murrine`) that is not installed.
+1. **Re-run the script**: `distrobox enter arch-desktop -- ~/.local/bin/sync-theme.sh`
+2. **Check Environment Variables**: Inside the container, run `env | grep QT_`. You should see `QT_QPA_PLATFORMTHEME=qt5ct`.
+3. **Install Missing Theme Engine**: The container may need a specific GTK theme engine (e.g., `murrine`) that is not installed.
 
 #### Scaling Issues
 
-1.  **Verify Variables**: Inside the container, run `env | grep -E "GDK_SCALE|QT_SCALE_FACTOR"`.
-2.  **Restart Applications**: Scaling variables are typically read on application startup. Close and reopen the application.
-3.  **Exit and Re-enter**: Exit the container and enter it again to ensure the `environment.d` files are sourced.
+1. **Verify Variables**: Inside the container, run `env | grep -E "GDK_SCALE|QT_SCALE_FACTOR"`.
+2. **Restart Applications**: Scaling variables are typically read on application startup. Close and reopen the application.
+3. **Exit and Re-enter**: Exit the container and enter it again to ensure the `environment.d` files are sourced.
 
 #### SELinux Denials
 
-1.  **Check Audit Log**: `sudo ausearch -m avc -ts recent | audit2allow -a`. This command will show you the denial and suggest a potential fix.
-2.  **Use Permissive Mode for Debugging**: If you cannot resolve the issue, you can temporarily set the container context to permissive: `sudo semanage permissive -a container_t`. **This is not a permanent solution.**
-3.  **Regenerate Policy**: After installing a new application that accesses host resources differently, regenerate the Udica policy.
+1. **Check Audit Log**: `sudo ausearch -m avc -ts recent | audit2allow -a`. This command will show you the denial and suggest a potential fix.
+2. **Use Permissive Mode for Debugging**: If you cannot resolve the issue, you can temporarily set the container context to permissive: `sudo semanage permissive -a container_t`. **This is not a permanent solution.**
+3. **Regenerate Policy**: After installing a new application that accesses host resources differently, regenerate the Udica policy.
 
 ---
 
 ### Summary of Fixes and Changes
 
-1.  **Redundancy in Theming:**
+1. **Redundancy in Theming:**
     - The separate `sync-gtk-theme.sh` and `apply-unified-theme.sh` scripts were redundant and contradictory. They were merged into a single `sync-theme.sh` script.
     - The hardcoded Qt configuration was replaced with a dynamic method that sets the Qt style to `gtk2`, forcing Qt to follow the GTK theme automatically. This is a much more robust and maintainable approach.
     - Removed the redundant `QT_STYLE_OVERRIDE` environment variable.
 
-2.  **Improved Scripting Logic:**
+2. **Improved Scripting Logic:**
     - Scripts now use `#!/usr/bin/env bash` for better portability.
     - Added checks to ensure scripts exit gracefully if a required setting (like a host theme) cannot be found.
     - Environment variables are now set using `~/.config/environment.d/` files inside the container, which is the modern, systemd-recommended way for user sessions. This avoids cluttering shell-specific files like `.bashrc`.
 
-3.  **Simplification and Accuracy:**
+3. **Simplification and Accuracy:**
     - The `pacman` command in the initial setup was consolidated using `--noconfirm` and `--needed` to be more efficient.
     - Removed the `xorg-server-xephyr` package, as it's not needed for running applications and adds unnecessary complexity.
     - Added the `gsettings-desktop-schemas` package, which is often required for `gsettings` to work correctly.
 
-4.  **SELinux Section Overhaul:**
+4. **SELinux Section Overhaul:**
     - The guide now strongly recommends **Udica** as the primary method for generating SELinux policies, which is safer and more accurate than writing manual rules.
     - The complex and potentially insecure manual `.te` file has been removed in favor of the automated Udica workflow.
     - Simplified the SELinux commands and added checks to ensure the container is running before generating a policy.
     - Removed unnecessary `setsebool` commands that are not relevant for a standard desktop setup.
 
-5.  **Enhanced Best Practices:**
+5. **Enhanced Best Practices:**
     - Instead of sourcing scripts from `.bashrc`, the guide now recommends using Distrobox's built-in `pre-init` hook for a more reliable and shell-agnostic initialization process.
     - Replaced instructions for manually creating `.desktop` files with the much simpler and more robust `distrobox-export` command.
     - The container management script was simplified to focus on the most common and useful tasks.

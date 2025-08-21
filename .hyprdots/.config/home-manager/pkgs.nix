@@ -1,11 +1,11 @@
 { pkgs, ... }: {
   home.packages = with pkgs; [
+    alejandra
     delta
     lua5_1
     fastfetch
     luarocks
     emacs-lsp-booster
-    markdownlint-cli
     nix-prefetch-git
     nix-prefetch-github
     nil
