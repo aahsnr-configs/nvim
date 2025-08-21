@@ -58,7 +58,6 @@
     ./btop.nix
     ./catppuccin.nix
     ./dev.nix
-    ./emoji.nix
     ./eza.nix
     ./fd-find.nix
     ./fonts.nix
