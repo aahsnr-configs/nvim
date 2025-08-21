@@ -1,32 +1,16 @@
 # EMACS PLAN
 
-## INSPIRATIONS
-
-## OPTIMIZATIONS
-
-- [ ] Headling folding/unfolding can introduce lag
-- [ ] Input Delay when using pgtk
-
 ## QUESTIONS
 
 - [ ] Orderless,vertico, marginalia, nerd-icons-completion, consult, embark, embark-consult, corfu, nerd-icons-corfu, cape, dabbrev. What are some issues that these package face with eglot
 - [ ] Does corfu have native integration with eldoc
 - [ ] How does lsp-mode view documentation.
 - [ ] What will happen when cape-company-to-capf backend is provided to cape.
-- [ ] Will treesit work with lsp-mode and/or dap-mode
 - [ ] How does paredit work?
 - [ ] Are additional backends needed for cape and eglot
-- [ ] Can I use a formatter with texlab
-- [ ] Determine if I need flycheck-posframe
 - [ ] Make apheleia autoformats buffers on have
-- [ ] Will AucTeX completion work with corfu?
 
 ## COMPLETION/DEVELOPMENT
-
-- `Desired Corfu Behaviour`:
-  - [x] Buffer-local/Corfu-only completion styles [Corfu Github]
-  - [x] TAB-and-Go completion [Corfu Github] working
-  - [x] Disable popupifo and use corfu-show-info-documentation to setup a keybinding to display documentation
 
 - Desired Flymake Behaviour
   - [ ] Remove flymake posframe and add flymake-sideline
@@ -93,14 +77,6 @@ Make sure the LateX writing environment is integrated with the rest of the emacs
 - [ ] Setup completion setup for the auctex package like company-auctex
 - [ ] Add evil surround
 - [x] Org Mode
-- [x] Integrate org settings from elken/doom
-- [x] Borrow modern emacs from my doom branch of aahsnr/emacs
-- [x] Setup projectile, ibuffer, treemacs, persp-mode: **There are errors in this configuration**
-- [x] Setup eglot and dape
-- [x] Integrate the completion framework with eglot and dape
-- [x] Set gc-cons-threshold to 100mb
-- [x] Set corfu to display documentation only on key input
-- [ ] Add cape-company-to-capf backend to cape
 - [ ] Use Scimax to setup many things
 - [ ] Dired/Dirvish: Copy doom emacs's setup; [Note]: Don't use gemini
 - [x] For LSP, use eglot and related packages;
@@ -164,3 +140,4 @@ Make sure the LateX writing environment is integrated with the rest of the emacs
 - [ ] SqrtMinusOne
 - [ ] <https://github.com/emacs-tw/awesome-emacs>
 - [ ] progfolio setup
+- [ ] <https://github.com/seagle0128/.emacs.d>
