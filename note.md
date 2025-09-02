@@ -1,0 +1,1 @@
+- If installing/reinstalling astronvim, make sure to run TSInstall c helm lua vim
